@@ -174,7 +174,7 @@ RestrictionsMenu(key keyID, integer iAuth) {
     else lMyButtons += "♥ PetMode"; //Added *Dav
     if (g_iFreecamRestricted) lMyButtons += "☐ FreeCam"; //Added  *Dav
     else lMyButtons += "☑ FreeCam"; //Added *Dav
-	if (g_iRummageRestricted) lMyButtons += "☐ Rez/Edit"; //Replaced Rummage command with Rez/Edit *Dav
+    if (g_iRummageRestricted) lMyButtons += "☐ Rez/Edit"; //Replaced Rummage command with Rez/Edit *Dav
     else lMyButtons += "☑ Rez/Edit"; //Replaced Rummage command with Rez/Edit *Dav
     if (g_iTalkRestricted) lMyButtons += "☐ Talk";
     else lMyButtons += "☑ Talk";
