@@ -3,6 +3,7 @@
 // Garvin Twine, Romka Swallowtail et al.   
 // Licensed under the GPLv2.  See LICENSE for full details. 
 
+//PetMode changes added by Davywn Edward 2019
 
 //menu setup
 string  RESTRICTION_BUTTON          = "Restrictions"; // Name of the submenu
@@ -29,6 +30,10 @@ integer g_iReadRestricted;
 integer g_iHearRestricted;
 integer g_iTalkRestricted;
 integer g_iTouchRestricted;
+integer g_iFarTouchRestricted; //Added FarTouch restriction *Dav
+integer g_iFreecamRestricted; //Added FreeCam restriction *Dav
+integer g_iFlyRestricted; //Added Fly restriction *Dav
+integer g_iPetmodeRestricted; //Added 'PetMode' toggle *Dav
 integer g_iStrayRestricted;
 integer g_iRummageRestricted;
 integer g_iStandRestricted;
@@ -159,25 +164,33 @@ RestrictionsMenu(key keyID, integer iAuth) {
     string sPrompt = "\n[Restrictions]";
     list lMyButtons;
 
-    if (g_iSendRestricted) lMyButtons += "☐ Send IMs";
-    else lMyButtons += "☑ Send IMs";
-    if (g_iReadRestricted) lMyButtons += "☐ Read IMs";
-    else lMyButtons += "☑ Read IMs";
-    if (g_iHearRestricted) lMyButtons += "☐ Hear";
-    else lMyButtons += "☑ Hear";
+    //if (g_iSendRestricted) lMyButtons += "☐ Send IMs";  //Removed *Dav
+    //else lMyButtons += "☑ Send IMs"; //Removed *Dav
+    //if (g_iReadRestricted) lMyButtons += "☐ Read IMs"; //Removed *Dav
+    //else lMyButtons += "☑ Read IMs"; //Removed *Dav
+    //if (g_iHearRestricted) lMyButtons += "☐ Hear"; //Removed *Dav
+    //else lMyButtons += "☑ Hear"; //Removed *Dav
+    if (g_iPetmodeRestricted) lMyButtons += "✘ PetMode"; //Added *Dav
+    else lMyButtons += "♥ PetMode"; //Added *Dav
+    if (g_iFreecamRestricted) lMyButtons += "☐ FreeCam"; //Added  *Dav
+    else lMyButtons += "☑ FreeCam"; //Added *Dav
+	if (g_iRummageRestricted) lMyButtons += "☐ Rez/Edit"; //Replaced Rummage command with Rez/Edit *Dav
+    else lMyButtons += "☑ Rez/Edit"; //Replaced Rummage command with Rez/Edit *Dav
     if (g_iTalkRestricted) lMyButtons += "☐ Talk";
     else lMyButtons += "☑ Talk";
+    if (g_iFarTouchRestricted) lMyButtons += "☐ FarTouch"; //Added *Dav
+    else lMyButtons += "☑ FarTouch"; //Added *Dav
     if (g_iTouchRestricted) lMyButtons += "☐ Touch";
     else lMyButtons += "☑ Touch";
+    if (g_iFlyRestricted) lMyButtons += "☐ Fly"; //Added *Dav
+    else lMyButtons += "☑ Fly"; //Added *Dav
     if (g_iStrayRestricted) lMyButtons += "☐ Stray";
     else lMyButtons += "☑ Stray";
-    if (g_iRummageRestricted) lMyButtons += "☐ Rummage";
-    else lMyButtons += "☑ Rummage";
     if (g_iDressRestricted) lMyButtons += "☐ Dress";
     else lMyButtons += "☑ Dress";
     lMyButtons += "RESET";
-    if (g_iBlurredRestricted) lMyButtons += "Un-Dazzle";
-    else lMyButtons += "Dazzle";
+    //if (g_iBlurredRestricted) lMyButtons += "Un-Dazzle"; //Removed *Dav
+    //else lMyButtons += "Dazzle"; //Removed *Dav
     if (g_iDazedRestricted) lMyButtons += "Un-Daze";
     else lMyButtons += "Daze";
 
@@ -262,42 +275,55 @@ DetachMenu(key kID, integer iAuth)
 }
 
 doRestrictions(){
-    if (g_iSendRestricted)     llMessageLinked(LINK_RLV,RLV_CMD,"sendim=n","vdRestrict");
-    else llMessageLinked(LINK_RLV,RLV_CMD,"sendim=y","vdRestrict");
+    //if (g_iSendRestricted)     llMessageLinked(LINK_RLV,RLV_CMD,"sendim=n","vdRestrict"); //Removed *Dav
+    //else llMessageLinked(LINK_RLV,RLV_CMD,"sendim=y","vdRestrict"); //Removed *Dav
 
-    if (g_iReadRestricted)     llMessageLinked(LINK_RLV,RLV_CMD,"recvim=n","vdRestrict");
-    else llMessageLinked(LINK_RLV,RLV_CMD,"recvim=y","vdRestrict");
+    //if (g_iReadRestricted)     llMessageLinked(LINK_RLV,RLV_CMD,"recvim=n","vdRestrict"); //Removed *Dav
+    //else llMessageLinked(LINK_RLV,RLV_CMD,"recvim=y","vdRestrict"); //Removed *Dav
 
-    if (g_iHearRestricted)     llMessageLinked(LINK_RLV,RLV_CMD,"recvchat=n","vdRestrict");
-    else llMessageLinked(LINK_RLV,RLV_CMD,"recvchat=y","vdRestrict");
+    //if (g_iHearRestricted)     llMessageLinked(LINK_RLV,RLV_CMD,"recvchat=n","vdRestrict"); //Removed *Dav
+    //else llMessageLinked(LINK_RLV,RLV_CMD,"recvchat=y","vdRestrict"); //Removed *Dav
 
-    if (g_iTalkRestricted)     llMessageLinked(LINK_RLV,RLV_CMD,"sendchat=n","vdRestrict");
-    else llMessageLinked(LINK_RLV,RLV_CMD,"sendchat=y","vdRestrict");
+    //if (g_iTalkRestricted)     llMessageLinked(LINK_RLV,RLV_CMD,"sendchat=n","vdRestrict"); //Original Talk disallow *Dav
+    //else llMessageLinked(LINK_RLV,RLV_CMD,"sendchat=y","vdRestrict"); //*Dav
+    if (g_iTalkRestricted)     llMessageLinked(LINK_RLV,RLV_CMD,"redirchat:300=add","vdRestrict"); //Add rediremote:310=add  if you want emotes redirected to pettalk script too. This redirects chat to pettalk script *Dav
+    else llMessageLinked(LINK_RLV,RLV_CMD,"redirchat:300=rem","vdRestrict"); //*Dav
 
     if (g_iTouchRestricted)    llMessageLinked(LINK_RLV,RLV_CMD,"touchall=n","vdRestrict");
     else llMessageLinked(LINK_RLV,RLV_CMD,"touchall=y","vdRestrict");
 
-    if (g_iStrayRestricted)    llMessageLinked(LINK_RLV,RLV_CMD,"tplm=n,tploc=n,tplure=n,sittp=n","vdRestrict");
-    else llMessageLinked(LINK_RLV,RLV_CMD,"tplm=y,tploc=y,tplure=y,sittp=y","vdRestrict");
+    if (g_iFarTouchRestricted)    llMessageLinked(LINK_RLV,RLV_CMD,"fartouch:2=n","vdRestrict"); //Added *Dav
+    else llMessageLinked(LINK_RLV,RLV_CMD,"fartouch:2=y","vdRestrict"); //Added *Dav
+
+    if (g_iStrayRestricted)    llMessageLinked(LINK_RLV,RLV_CMD,"tplm=n,tploc=n,tplure=n,sittp:6=n","vdRestrict"); //SitTP set to 6 *Dav
+    else llMessageLinked(LINK_RLV,RLV_CMD,"tplm=y,tploc=y,tplure=y,sittp:6=y","vdRestrict"); //SitTP set to 6 *Dav
 
     if (g_iStandRestricted) {
         if (llGetAgentInfo(g_kWearer)&AGENT_SITTING) llMessageLinked(LINK_RLV,RLV_CMD,"unsit=n","vdRestrict");
     } else llMessageLinked(LINK_RLV,RLV_CMD,"unsit=y","vdRestrict");
 
-    if (g_iRummageRestricted)  llMessageLinked(LINK_RLV,RLV_CMD,"showinv=n,viewscript=n,viewtexture=n,edit=n,rez=n","vdRestrict");
-    else llMessageLinked(LINK_RLV,RLV_CMD,"showinv=y,viewscript=y,viewtexture=y,edit=y,rez=y","vdRestrict");
+    if (g_iRummageRestricted)  llMessageLinked(LINK_RLV,RLV_CMD,"edit=n,rez=n","vdRestrict"); //Rummage modified to 'Rez/Edit' *Dav
+    else llMessageLinked(LINK_RLV,RLV_CMD,"edit=y,rez=y","vdRestrict"); //Rummage modified *Dav
 
     if (g_iDressRestricted)    llMessageLinked(LINK_RLV,RLV_CMD,"addattach=n,remattach=n,defaultwear=n,addoutfit=n,remoutfit=n","vdRestrict");
     else llMessageLinked(LINK_RLV,RLV_CMD,"addattach=y,remattach=y,defaultwear=y,addoutfit=y,remoutfit=y","vdRestrict");
 
-    if (g_iBlurredRestricted)  llMessageLinked(LINK_RLV,RLV_CMD,"setdebug_renderresolutiondivisor:16=force","vdRestrict");
-    else llMessageLinked(LINK_RLV,RLV_CMD,"setdebug_renderresolutiondivisor:1=force","vdRestrict");
+    //if (g_iBlurredRestricted)  llMessageLinked(LINK_RLV,RLV_CMD,"setdebug_renderresolutiondivisor:16=force","vdRestrict"); //Removed *Dav
+    //else llMessageLinked(LINK_RLV,RLV_CMD,"setdebug_renderresolutiondivisor:1=force","vdRestrict"); //Removed *Dav
 
-    if (g_iDazedRestricted)    llMessageLinked(LINK_RLV,RLV_CMD,"shownames=n,showhovertextworld=n,showloc=n,showworldmap=n,showminimap=n","vdRestrict");
-    else llMessageLinked(LINK_RLV,RLV_CMD,"shownames=y,showhovertextworld=y,showloc=y,showworldmap=y,showminimap=y","vdRestrict");
+    if (g_iFreecamRestricted)  llMessageLinked(LINK_RLV,RLV_CMD,"camunlock=n,camdistmax:1=n","vdRestrict"); //Added *Dav
+    else llMessageLinked(LINK_RLV,RLV_CMD,"camunlock=y,camdistmax:1=y","vdRestrict"); //Added *Dav
+
+    if (g_iFlyRestricted)  llMessageLinked(LINK_RLV,RLV_CMD,"fly=n","vdRestrict"); //Added *Dav
+    else llMessageLinked(LINK_RLV,RLV_CMD,"fly=y","vdRestrict"); //Added *Dav
+
+    if (g_iDazedRestricted)    llMessageLinked(LINK_RLV,RLV_CMD,"showloc=n,showworldmap=n,showminimap=n","vdRestrict"); //Removed shownames=n,showhovertextworld=n *Dav
+    else llMessageLinked(LINK_RLV,RLV_CMD,"showloc=y,showworldmap=y,showminimap=y","vdRestrict"); //*Dav
 }
 
 releaseRestrictions() {
+    g_iPetmodeRestricted=FALSE; //Added PetMode toggle *Dav
+    llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_petmode",""); //*Dav
     g_iSendRestricted=FALSE;
     llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_send","");
     g_iReadRestricted=FALSE;
@@ -309,6 +335,8 @@ releaseRestrictions() {
     g_iStrayRestricted=FALSE;
     llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_touch","");
     g_iTouchRestricted=FALSE;
+    llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_fartouch",""); //Added FarTouch *Dav
+    g_iFarTouchRestricted=FALSE; //*Dav
     llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_stray","");
     g_iRummageRestricted=FALSE;
     llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_stand","");
@@ -316,8 +344,12 @@ releaseRestrictions() {
     llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_rummage","");
     g_iDressRestricted=FALSE;
     llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_dress","");
-    g_iBlurredRestricted=FALSE;
-    llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_blurred","");
+    //g_iBlurredRestricted=FALSE; //Removed *Dav
+    //llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_blurred",""); //Removed *Dav
+    g_iFreecamRestricted=FALSE; //Added FreeCam *Dav
+    llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_freecam",""); //*Dav
+    g_iFlyRestricted=FALSE; //Added Fly *Dav
+    llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_fly",""); //*Dav
     g_iDazedRestricted=FALSE;
     llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_dazed","");
 
@@ -383,6 +415,42 @@ UserCommand(integer iNum, string sStr, key kID, integer bFromMenu) {
     } else if (sLowerStr == "restrictions reset" || sLowerStr == "allow all"){
         if (iNum == CMD_OWNER) releaseRestrictions();
         else iNoAccess=TRUE;
+        //Added PetMode block *Dav
+    } else if (sLowerStr == "restrictions ✘ petmode" || sLowerStr == "petmode off"){
+        if (iNum <= g_iPetmodeRestricted || !g_iPetmodeRestricted) {
+            g_iPetmodeRestricted=FALSE;
+            llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_petmode","");
+            g_iFarTouchRestricted=FALSE;
+            llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_fartouch","");
+            g_iTalkRestricted=FALSE;
+            llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_talk","");
+            g_iRummageRestricted=FALSE;
+            llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_rummage","");
+            //g_iDressRestricted=FALSE;
+            //llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_dress","");
+            g_iFreecamRestricted=FALSE;
+            llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_freecam","");
+            doRestrictions();
+            llMessageLinked(LINK_DIALOG,NOTIFY,"1Pet Mode restrictions lifted",kID);
+        } else iNoAccess=TRUE;
+    } else if (sLowerStr == "restrictions ♥ petmode" || sLowerStr == "petmode on"){
+        if (iNum <= g_iPetmodeRestricted || !g_iPetmodeRestricted) {
+            g_iPetmodeRestricted=iNum;
+            llMessageLinked(LINK_SAVE,LM_SETTING_SAVE,"restrictions_petmode="+(string)iNum,"");
+            g_iFarTouchRestricted=iNum;
+            llMessageLinked(LINK_SAVE,LM_SETTING_SAVE,"restrictions_fartouch="+(string)iNum,"");
+            g_iTalkRestricted=iNum;
+            llMessageLinked(LINK_SAVE,LM_SETTING_SAVE,"restrictions_talk="+(string)iNum,"");
+            g_iRummageRestricted=iNum;
+            llMessageLinked(LINK_SAVE,LM_SETTING_SAVE,"restrictions_rummage="+(string)iNum,"");
+            //g_iDressRestricted=iNum;
+            //llMessageLinked(LINK_SAVE,LM_SETTING_SAVE,"restrictions_dress="+(string)iNum,"");
+            g_iFreecamRestricted=iNum;
+            llMessageLinked(LINK_SAVE,LM_SETTING_SAVE,"restrictions_freecam="+(string)iNum,"");
+            doRestrictions();
+            llMessageLinked(LINK_DIALOG,NOTIFY,"1Pet Mode enabled. The pet is a normal animal now.",kID);
+      } else iNoAccess=TRUE;
+      //End petmode code block *Dav
     } else if (sLowerStr == "restrictions ☐ send ims" || sLowerStr == "allow sendim"){
         if (iNum <= g_iSendRestricted || !g_iSendRestricted) {
             g_iSendRestricted=FALSE;
@@ -429,6 +497,8 @@ UserCommand(integer iNum, string sStr, key kID, integer bFromMenu) {
         if (iNum <= g_iTouchRestricted || !g_iTouchRestricted) {
             g_iTouchRestricted=FALSE;
             llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_touch","");
+            g_iPetmodeRestricted=FALSE; //Added PetMode to Touch *Dav
+            llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_petmode",""); //*Dav
             doRestrictions();
             llMessageLinked(LINK_DIALOG,NOTIFY,"1Ability to Touch is un-restricted",kID);
         } else iNoAccess=TRUE;
@@ -439,6 +509,24 @@ UserCommand(integer iNum, string sStr, key kID, integer bFromMenu) {
             doRestrictions();
             llMessageLinked(LINK_DIALOG,NOTIFY,"1Ability to Touch restricted",kID);
         } else iNoAccess=TRUE;
+        //Added FarTouch block *Dav
+    } else if (sLowerStr == "restrictions ☐ fartouch" || sLowerStr == "allow fartouch"){
+        if (iNum <= g_iFarTouchRestricted || !g_iFarTouchRestricted) {
+            g_iFarTouchRestricted=FALSE;
+            llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_fartouch","");
+            g_iPetmodeRestricted=FALSE;
+            llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_petmode","");
+            doRestrictions();
+            llMessageLinked(LINK_DIALOG,NOTIFY,"1Ability to Far-Touch is un-restricted",kID);
+        } else iNoAccess=TRUE;
+    } else if (sLowerStr == "restrictions ☑ fartouch" || sLowerStr == "forbid fartouch"){
+        if (iNum <= g_iFarTouchRestricted || !g_iFarTouchRestricted) {
+            g_iFarTouchRestricted=iNum;
+            llMessageLinked(LINK_SAVE,LM_SETTING_SAVE,"restrictions_fartouch="+(string)iNum,"");
+            doRestrictions();
+            llMessageLinked(LINK_DIALOG,NOTIFY,"1Ability to Far-Touch restricted",kID);
+        } else iNoAccess=TRUE;
+        //End FarTouch block *Dav
     } else if (sLowerStr == "restrictions ☐ stray" || sLowerStr == "allow stray"){
         if (iNum <= g_iStrayRestricted || !g_iStrayRestricted) {
             g_iStrayRestricted=FALSE;
@@ -482,19 +570,21 @@ UserCommand(integer iNum, string sStr, key kID, integer bFromMenu) {
             doRestrictions();
             llMessageLinked(LINK_DIALOG,NOTIFY,"1Ability to Talk is restricted",kID);
         } else iNoAccess=TRUE;
-    } else if (sLowerStr == "restrictions ☐ rummage" || sLowerStr == "allow rummage"){
+    } else if (sLowerStr == "restrictions ☐ rez/edit" || sLowerStr == "allow rez/edit"){ //Renamed rummage to Rez/Edit *Dav
         if (iNum <= g_iRummageRestricted || !g_iRummageRestricted) {
             g_iRummageRestricted=FALSE;
             llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_rummage","");
+            g_iPetmodeRestricted=FALSE; //Added PetMode to Rez/Edit *Dav
+            llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_petmode",""); //*Dav
             doRestrictions();
-            llMessageLinked(LINK_DIALOG,NOTIFY,"1Ability to Rummage is un-restricted",kID);
+            llMessageLinked(LINK_DIALOG,NOTIFY,"1Ability to Rez/Edit is un-restricted",kID); //Renamed Rummage to Rez/Edit *Dav
         } else iNoAccess=TRUE;
-    } else if (sLowerStr == "restrictions ☑ rummage" || sLowerStr == "forbid rummage"){
+    } else if (sLowerStr == "restrictions ☑ rez/edit" || sLowerStr == "forbid Rez/Edit"){ //Renamed Rummage to Rez/Edit *Dav
         if (iNum <= g_iRummageRestricted || !g_iRummageRestricted) {
             g_iRummageRestricted=iNum;
             llMessageLinked(LINK_SAVE,LM_SETTING_SAVE,"restrictions_rummage="+(string)iNum,"");
             doRestrictions();
-            llMessageLinked(LINK_DIALOG,NOTIFY,"1Ability to Rummage is restricted",kID);
+            llMessageLinked(LINK_DIALOG,NOTIFY,"1Ability to Rez/Edit is restricted",kID); //Renamed Rummage to Rez/Edit *Dav
         } else iNoAccess=TRUE;
     } else if (sLowerStr == "restrictions ☐ dress" || sLowerStr == "allow dress"){
         if (iNum <= g_iDressRestricted || !g_iDressRestricted) {
@@ -510,20 +600,52 @@ UserCommand(integer iNum, string sStr, key kID, integer bFromMenu) {
             doRestrictions();
             llMessageLinked(LINK_DIALOG,NOTIFY,"1Ability to Dress is restricted",kID);
         } else iNoAccess=TRUE;
-    } else if (sLowerStr == "restrictions un-dazzle" || sLowerStr == "undazzle"){
-        if (iNum <= g_iBlurredRestricted || !g_iBlurredRestricted) {
-            g_iBlurredRestricted=FALSE;
-            llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_blurred","");
+    //Added FreeCam and Fly block *Dav
+    } else if (sLowerStr == "restrictions ☐ freecam" || sLowerStr == "allow freecam"){
+        if (iNum <= g_iFreecamRestricted || !g_iFreecamRestricted) {
+            g_iFreecamRestricted=FALSE;
+            llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_freecam","");
+            g_iPetmodeRestricted=FALSE;
+            llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_petmode","");
             doRestrictions();
-            llMessageLinked(LINK_DIALOG,NOTIFY,"1Vision is clear",kID);
+            llMessageLinked(LINK_DIALOG,NOTIFY,"1Camera controls returned",kID);
         } else iNoAccess=TRUE;
-    } else if (sLowerStr == "restrictions dazzle" || sLowerStr == "dazzle"){
-        if (iNum <= g_iBlurredRestricted || !g_iBlurredRestricted) {
-            g_iBlurredRestricted=iNum;
-            llMessageLinked(LINK_SAVE,LM_SETTING_SAVE,"restrictions_blurred="+(string)iNum,"");
+    } else if (sLowerStr == "restrictions ☑ freecam" || sLowerStr == "forbid freecam"){
+        if (iNum <= g_iFreecamRestricted || !g_iFreecamRestricted) {
+            g_iFreecamRestricted=iNum;
+            llMessageLinked(LINK_SAVE,LM_SETTING_SAVE,"restrictions_freecam="+(string)iNum,"");
             doRestrictions();
-            llMessageLinked(LINK_DIALOG,NOTIFY,"1Vision is restricted",kID);
+            llMessageLinked(LINK_DIALOG,NOTIFY,"1Camera locked to mouselook",kID);
         } else iNoAccess=TRUE;
+    } else if (sLowerStr == "restrictions ☐ fly" || sLowerStr == "allow fly"){
+        if (iNum <= g_iFlyRestricted || !g_iFlyRestricted) {
+            g_iFlyRestricted=FALSE;
+            llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_fly","");
+            doRestrictions();
+            llMessageLinked(LINK_DIALOG,NOTIFY,"1Wings unbound. Flight un-restricted.",kID);
+        } else iNoAccess=TRUE;
+        } else if (sLowerStr == "restrictions ☑ fly" || sLowerStr == "forbid fly"){
+        if (iNum <= g_iFlyRestricted || !g_iFlyRestricted) {
+            g_iFlyRestricted=iNum;
+            llMessageLinked(LINK_SAVE,LM_SETTING_SAVE,"restrictions_fly="+(string)iNum,"");
+            doRestrictions();
+            llMessageLinked(LINK_DIALOG,NOTIFY,"1Wings bound. Flight restricted.",kID);
+            } else iNoAccess=TRUE;
+//End FreeCam and Fly block *Dav
+//    } else if (sLowerStr == "restrictions un-dazzle" || sLowerStr == "undazzle"){
+//        if (iNum <= g_iBlurredRestricted || !g_iBlurredRestricted) {
+//            g_iBlurredRestricted=FALSE;
+//            llMessageLinked(LINK_SAVE,LM_SETTING_DELETE,"restrictions_blurred","");
+//            doRestrictions();
+//            llMessageLinked(LINK_DIALOG,NOTIFY,"1Vision is clear",kID);
+//        } else iNoAccess=TRUE;
+//    } else if (sLowerStr == "restrictions dazzle" || sLowerStr == "dazzle"){
+//        if (iNum <= g_iBlurredRestricted || !g_iBlurredRestricted) {
+//            g_iBlurredRestricted=iNum;
+//            llMessageLinked(LINK_SAVE,LM_SETTING_SAVE,"restrictions_blurred="+(string)iNum,"");
+//            doRestrictions();
+//            llMessageLinked(LINK_DIALOG,NOTIFY,"1Vision is restricted",kID);
+//        } else iNoAccess=TRUE;
     } else if (sLowerStr == "restrictions un-daze" || sLowerStr == "undaze"){
         if (iNum <= g_iDazedRestricted || !g_iDazedRestricted) {
             g_iDazedRestricted=FALSE;
@@ -622,30 +744,40 @@ default {
             llMessageLinked(iSender, MENUNAME_RESPONSE, COLLAR_PARENT_MENU + "|Detach", "");
         } else if (iNum == LM_SETTING_EMPTY) {
             if (sStr=="restrictions_send")         g_iSendRestricted=FALSE;
+            else if (sStr=="restrictions_petmode") g_iPetmodeRestricted=FALSE; //Added PetMode *Dav
             else if (sStr=="restrictions_read")    g_iReadRestricted=FALSE;
             else if (sStr=="restrictions_hear")    g_iHearRestricted=FALSE;
             else if (sStr=="restrictions_talk")    g_iTalkRestricted=FALSE;
             else if (sStr=="restrictions_touch")   g_iTouchRestricted=FALSE;
+            else if (sStr=="restrictions_fartouch") g_iFarTouchRestricted=FALSE; //Added FarTouch *Dav
             else if (sStr=="restrictions_stray")   g_iStrayRestricted=FALSE;
             else if (sStr=="restrictions_stand")   g_iStandRestricted=FALSE;
             else if (sStr=="restrictions_rummage") g_iRummageRestricted=FALSE;
+            else if (sStr=="restrictions_freecam") g_iFreecamRestricted=FALSE; //Added FreeCam *Dav
+            else if (sStr=="restrictions_fly")     g_iFlyRestricted=FALSE; //Added Fly *Dav
             else if (sStr=="restrictions_blurred") g_iBlurredRestricted=FALSE;
             else if (sStr=="restrictions_dazed")   g_iDazedRestricted=FALSE;
+            else if (sStr=="restrictions_dress") g_iDressRestricted=FALSE; //Added missing Dress clear *Dav
         } else if (iNum == LM_SETTING_RESPONSE) {
             list lParams = llParseString2List(sStr, ["="], []);
             string sToken = llList2String(lParams, 0);
             string sValue = llList2String(lParams, 1);
             if (~llSubStringIndex(sToken,"restrictions_")){
                 if (sToken=="restrictions_send")          g_iSendRestricted=(integer)sValue;
+                else if (sToken=="restrictions_petmode")  g_iPetmodeRestricted=(integer)sValue; //Added PetMode *Dav
                 else if (sToken=="restrictions_read")     g_iReadRestricted=(integer)sValue;
                 else if (sToken=="restrictions_hear")     g_iHearRestricted=(integer)sValue;
                 else if (sToken=="restrictions_talk")     g_iTalkRestricted=(integer)sValue;
                 else if (sToken=="restrictions_touch")    g_iTouchRestricted=(integer)sValue;
+                else if (sToken=="restrictions_fartouch") g_iFarTouchRestricted=(integer)sValue; //Added FarTouch *Dav
                 else if (sToken=="restrictions_stray")    g_iStrayRestricted=(integer)sValue;
                 else if (sToken=="restrictions_stand")    g_iStandRestricted=(integer)sValue;
                 else if (sToken=="restrictions_rummage")  g_iRummageRestricted=(integer)sValue;
-                else if (sToken=="restrictions_blurred")  g_iBlurredRestricted=(integer)sValue;
+                //else if (sToken=="restrictions_blurred")  g_iBlurredRestricted=(integer)sValue; //Removed Dazzle *Dav
+                else if (sToken=="restrictions_freecam")  g_iFreecamRestricted=(integer)sValue; //Added FreeCam *Dav
+                else if (sToken=="restrictions_fly")      g_iFlyRestricted=(integer)sValue; //Added Fly *Dav
                 else if (sToken=="restrictions_dazed")    g_iDazedRestricted=(integer)sValue;
+                else if (sToken=="restrictions_dress")    g_iDressRestricted=(integer)sValue; //Added Dress *Dav
             }
         }
         else if (iNum >= CMD_OWNER && iNum <= CMD_WEARER) UserCommand(iNum, sStr, kID,FALSE);
