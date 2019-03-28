@@ -198,7 +198,7 @@ ApplyRestrictions() {
             if (g_kLeashedTo) {
                 if (! g_bFollowMode) {
                 //Debug("Setting restrictions");
-                llMessageLinked(LINK_RLV, RLV_CMD, "fly=n,tplm=n,tplure=n,tploc=n,tplure:" + (string) g_kLeashedTo + "=add", "realleash");     //set all restrictions
+                llMessageLinked(LINK_RLV, RLV_CMD, "tplm=n,tplure=n,tploc=n,tplure:" + (string) g_kLeashedTo + "=add", "realleash");     //set all restrictions Removed 'no fly' from restrictions *Dav
                 return;
                 }
             }
