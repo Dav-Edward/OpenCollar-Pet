@@ -35,10 +35,15 @@ content.
     > src: Source code
 
         > ao: The source code for the animation overrider.
+        > Apps: The source code for optional apps!
         > collar: The source code for the collar device.
         > installer: The source code for the package manager.
         > remote: The source code for the remote control HUD.
         > spares: Spares and snippets for research and development.
+        > cuffs: Where the cuff source code is.
+             > Collar_Plugin: The plugin which should reside in the collar itself.
+             > Right_wrist: The scripts that go into the right wrist cuff. This is the main cuff source code.
+             > Slave_cuffs: Other cuffs which should not contain the main scripts
 
     > web: Web queries.
 ```

@@ -1,8 +1,6 @@
 ITEM|back
-ITEM|beautystand
 ITEM|belly
 ITEM|booty
-ITEM|bop
 ITEM|bracelets
 ITEM|cutie
 ITEM|display
@@ -22,7 +20,8 @@ ITEM|~hips
 ITEM|~hug
 ITEM|~kiss
 ITEM|~leap
-ITEM|~nom
+ITEM|~footkiss
+ITEM|~stiff
 ITEM|~pet
 ITEM|.couples
 SCRIPT|oc_anim
